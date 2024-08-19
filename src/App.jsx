@@ -10,6 +10,8 @@ function App() {
   const [ tenzies, setTenzies] = React.useState(false);
   const [ count, setCount ] = React.useState(0)
 
+  const highScore = localStorage.getItem("high score")
+
   React.useEffect(() => {
     let state = true;
         const testing = dice.map(die => {
@@ -60,6 +62,9 @@ function App() {
       }))
       setCount(count+1)
     }else{
+      if(highScore > count || highScore == null){
+        localStorage.setItem("high score", count)
+      }
       setDice(allNewDice())
       setTenzies(false)
       setCount(0)
@@ -91,7 +96,10 @@ function App() {
             {diceElements}
           </div>
           <button className="roll-btn" onClick={roll}>{tenzies ? "New Game" : "Roll" }</button>
-          <h1 className="roll-count">Rolls: {count}</h1>
+          <div className="bottom-section">
+            <h1 className="roll-count">Rolls: {count}</h1>
+            <h1 className="roll-count">High Score: {highScore}</h1>
+          </div>
       </main>
     </>
   )
